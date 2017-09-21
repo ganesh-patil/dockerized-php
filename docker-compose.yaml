@@ -1,14 +1,30 @@
 version: "3.0"
-
 services:
-
-  nginx:
+  php-apache:
     restart: always
     privileged: true
-    image: nginx:stable-alpine
+    image: php:7.0-apache
     ports:
-      - 80:80
+      - 9000:80
+    links:
+      - mysql:mysql
+      - mysql-php:mysql-php
     volumes:
-      - ./docker/logs:/var/log/nginx
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-
+      - ./app:/var/www/html/
+      - ./log:/var/log
+      
+  mysql-php:
+    restart: always
+    image: bigtruedata/php-mysqli
+    
+  mysql:
+    restart: always
+    image: mysql
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/logs:/var/log/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    
