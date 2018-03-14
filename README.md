@@ -7,6 +7,7 @@ Php application setup using docker containers (used docker images: hp:7.0-apache
   3. Start container using command.
   ```` 
   $cd dockerized-php
+  $docker-compose build --build-arg DOCKER_IMAGE=php:5.4-apache php-apache
   $docker-compose up
   ````
   4. Access the application using url (http://localhost:9000/)

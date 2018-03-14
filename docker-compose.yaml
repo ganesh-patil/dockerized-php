@@ -3,7 +3,10 @@ services:
   php-apache:
     restart: always
     privileged: true
-    build: ./docker/php-apache
+    build: 
+        context: ./docker/php-apache
+        #args:
+         #  - DOCKER_IMAGE=php:7.0-apache
     ports:
       - 9000:80
     links:
